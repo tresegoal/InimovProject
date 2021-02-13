@@ -3,14 +3,13 @@
 
 namespace App\Repositories;
 
-use App\Models\Produit;
+use App\Models\User;
 
-class ProduitRepository extends BaseRepository
+class UserRepository extends BaseRepository
 {
-    public function __construct(Produit $produit)
+    public function __construct(User $user)
     {
-        $this->model = $produit;
+        $this->model = $user;
     }
-
 
 }

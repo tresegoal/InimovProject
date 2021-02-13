@@ -3,13 +3,13 @@
 
 namespace App\Repositories;
 
-use App\Models\Produit;
+use App\Models\Image;
 
-class ProduitRepository extends BaseRepository
+class ImageRepository extends BaseRepository
 {
-    public function __construct(Produit $produit)
+    public function __construct(Image $image)
     {
-        $this->model = $produit;
+        $this->model = $image;
     }
 
 
