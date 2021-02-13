@@ -5,7 +5,7 @@
             <nav class="limiter-menu-desktop p-l-45" style="background-color: #0b0b0b;">
 
                 <a href="{{ url('/') }}" class="logo">
-                    <img src="{{ asset('images/icons/logo-02.png') }}" alt="IMG-LOGO">
+                    <img src="{{ asset('images/icons/logo-inimov-blanc.png') }}" alt="IMG-LOGO">
                 </a>
 
                 <div class="menu-desktop">

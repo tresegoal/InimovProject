@@ -28,7 +28,7 @@ DOCTYPE html>
     {{--style--}}
 
 </head>
-<body {{--class="animsition"--}}>
+<body class="animsition">
 
 <!-- header -->
 @include('partials/header')
