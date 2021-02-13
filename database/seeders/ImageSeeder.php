@@ -3,30 +3,34 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Image;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
-class UserSeed extends Seeder
+class ImageSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
-     * @return void
+     * @return images
      */
     public function run()
     {
-        $users = [
-            ['id' => 1, 'name' => 'Admin', 'email' => 'admin@admin.com', 'remember_token' => '',]
-
+       /* $images = [
+            ['url' => "product-06.jpg", 'alt' => 'Informatique','category_id'=>1,'produit_id'=>null],
+            ['url' => "product-09.jpg", 'alt' => 'Electronique','category_id'=>2,'produit_id'=>null],
+            ['url' => "product-12.jpg", 'alt' => 'Electromenager','category_id'=>3,'produit_id'=>null],
+            ['url' => "product-14.jpg", 'alt' => 'Mode','category_id'=>4,'produit_id'=>null],
+            ['url' => "slide-07.jpg", 'alt' => 'Super marché','category_id'=>5,'produit_id'=>null],
+            ['url' => "banner-06.jpg", 'alt' => 'Maison et buereau','category_id'=>6,'produit_id'=>null]
         ];
 
-        $passwords = [
-            ['password' => Hash::make('openadmin')],
-        ];
 
-        foreach ($users as $key => $value) {
-            User::firstOrCreate($value, $passwords[$key]);
+        foreach ($images as $image) {
+            Image::create($image);
+        }*/
+
+        for($i=11;$i<23;$i++) {
+            Image::create(['url' => "product-0.$i.jpg", 'alt' => 'image.$i.','category_id'=>null,'produit_id'=>$i]);
         }
     }
 }

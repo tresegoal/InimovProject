@@ -1,18 +1,74 @@
 <?php
 
 return [
-		'user-management' => [		'title' => 'User management',		'fields' => [		],	],
-		'roles' => [		'title' => 'Roles',		'fields' => [			'title' => 'Title',		],	],
-		'users' => [		'title' => 'Users',		'fields' => [			'name' => 'Name',			'email' => 'Email',			'password' => 'Password',			'role' => 'Role',			'remember-token' => 'Remember token',		],	],
-		'countries' => [		'title' => 'Countries',		'fields' => [			'shortcode' => 'Shortcode',			'title' => 'Title',			'name' => 'Name',		],	],
-		'customers' => [		'title' => 'Customers',		'fields' => [			'first-name' => 'First name',			'last-name' => 'Last name',			'address' => 'Address',			'phone' => 'Phone',			'email' => 'Email',			'country' => 'Country',		],	],
-		'rooms' => [		'title' => 'Rooms',		'fields' => [			'room-number' => 'Room number',			'floor' => 'Floor',			'description' => 'Description',		],	],
-		'bookings' => [		'title' => 'Bookings',		'fields' => [			'customer' => 'Customer',			'room' => 'Room',			'time-from' => 'Time from',			'time-to' => 'Time to',			'additional-information' => 'Additional information',		],	],
-		'find-room' => [		'title' => 'Find room',		'fields' => [		],	],
-	'qa_create' => 'Créer',
+	
+	'user-management' => [
+		'title' => 'User management',
+		'fields' => [
+		],
+	],
+	
+	'roles' => [
+		'title' => 'Roles',
+		'fields' => [
+			'title' => 'Title',
+		],
+	],
+	
+	'users' => [
+		'title' => 'Users',
+		'fields' => [
+			'name' => 'Name',
+			'email' => 'Email',
+			'password' => 'Password',
+			'role' => 'Role',
+            'active' => 'Active',
+			'remember-token' => 'Remember token',
+		],
+	],
+
+
+    'categories' => [
+        'title' => 'Categories',
+        'fields' => [
+            'description' => 'description',
+            'name' => 'nom',
+            'active' => 'active',
+            'image' => 'image',
+        ],
+    ],
+
+    'produits' => [
+        'title' => 'Produits',
+        'fields' => [
+            'description' => 'description',
+            'name' => 'nom',
+            'active' => 'active',
+            'category' => 'categorie',
+            'price' => 'prix',
+            'qte' => 'Quantité',
+            'tva' => 'Tva',
+        ],
+    ],
+
+    'images' => [
+        'title' => 'Images',
+        'fields' => [
+            'url' => 'url',
+            'alt' => 'alt',
+            'category' => 'categorie',
+            'produit' => 'produit',
+        ],
+    ],
+
+
+    'qa_create' => 'Créer',
 	'qa_save' => 'Enregistrer',
 	'qa_edit' => 'Modifier',
+	'qa_active' => 'Activer',
+	'qa_deactive' => 'Desactiver',
 	'qa_restore' => 'Restaurer',
+	'qa_actions' => 'Actions',
 	'qa_permadel' => 'Supprimer définitivement',
 	'qa_all' => 'Tous',
 	'qa_trash' => 'Corbeille',
@@ -63,7 +119,7 @@ return [
 	'qa_forgot_password' => 'Mot de passe oublié ?',
 	'qa_remember_me' => 'Se souvenir de moi',
 	'qa_login' => 'Connexion',
-	'qa_change_password' => 'Changer le mot de passe',
+	'qa_change_password' => 'Reinitialiser le mot de passe',
 	'qa_print' => 'Imprimer',
 	'qa_copy' => 'Copier',
 	'qa_colvis' => 'Visibilité de la colonne',
@@ -233,5 +289,5 @@ return [
 	'qa_csvImport' => 'Importer CSV.',
 	'qa_csv_file_to_import' => 'Fichier CSV à importer.',
 	'qa_parse_csv' => 'Analyser CSV.',
-	'quickadmin_title' => 'hotel-booking',
+	'quickadmin_title' => 'Inimov admin panel',
 ];

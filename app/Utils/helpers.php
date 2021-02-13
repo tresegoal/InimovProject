@@ -1,6 +1,6 @@
 <?php
 
-if(!function_exists('flash')){
+if(!function_exists('flashing')){
 
 	function flashing($message, $type = 'success')
 	{

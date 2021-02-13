@@ -1,95 +1,107 @@
-<aside class="wrap-sidebar js-sidebar">
-    <div class="s-full js-hide-sidebar"></div>
-    <div class="sidebar flex-col-l p-t-22 p-b-25">
-        <div class="flex-r w-full p-b-30 p-r-27">
-            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-sidebar">
-                <i class="zmdi zmdi-close"></i>
+<footer class="bg3 p-t-75 p-b-32">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3 p-b-50">
+                <h4 class="stext-301 cl0 p-b-30">
+                    Categories
+                </h4>
+                <ul>
+                    @forelse($categories as $cat)
+                    <li class="p-b-10">
+                        <a href="{{ route('category.produits', ['id'=> $cat->id]) }}" class="stext-107 cl7 hov-cl1 trans-04">
+                           {{ $cat->name }}
+                        </a>
+                    </li>
+                    @empty
+                    @endforelse
+                </ul>
             </div>
-        </div>
-        <div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
-            <ul class="sidebar-link w-full">
-                <li class="p-b-13">
-                    <a href="index.html" class="stext-102 cl2 hov-cl1 trans-04">
-                        Home
+            <div class="col-sm-6 col-lg-3 p-b-50">
+                <h4 class="stext-301 cl0 p-b-30">
+                    Help
+                </h4>
+                <ul>
+                    <li class="p-b-10">
+                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                            Track Order
+                        </a>
+                    </li>
+                    <li class="p-b-10">
+                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                            Returns
+                        </a>
+                    </li>
+                    <li class="p-b-10">
+                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                            Shipping
+                        </a>
+                    </li>
+                    <li class="p-b-10">
+                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                            FAQs
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-lg-3 p-b-50">
+                <h4 class="stext-301 cl0 p-b-30">
+                    GET IN TOUCH
+                </h4>
+                <p class="stext-107 cl7 size-201">
+                    Any questions? Let us know in store at Douala bassa or call us on (+237) 693 46 36 45
+                </p>
+                <div class="p-t-27">
+                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                        <i class="fa fa-facebook"></i>
                     </a>
-                </li>
-                <li class="p-b-13">
-                    <a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-                        My Wishlist
+                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                        <i class="fa fa-instagram"></i>
                     </a>
-                </li>
-                <li class="p-b-13">
-                    <a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-                        My Account
+                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                        <i class="fa fa-pinterest-p"></i>
                     </a>
-                </li>
-                <li class="p-b-13">
-                    <a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-                        Track Oder
-                    </a>
-                </li>
-                <li class="p-b-13">
-                    <a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-                        Refunds
-                    </a>
-                </li>
-                <li class="p-b-13">
-                    <a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-                        Help & FAQs
-                    </a>
-                </li>
-            </ul>
-            <div class="sidebar-gallery w-full p-tb-30">
-<span class="mtext-101 cl5">
-@ CozaStore
-</span>
-                <div class="flex-w flex-sb p-t-36 gallery-lb">
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-01.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-01.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-02.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-02.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-03.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-03.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-04.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-04.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-05.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-05.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-06.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-06.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-07.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-07.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-08.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-08.jpg');"></a>
-                    </div>
-
-                    <div class="wrap-item-gallery m-b-10">
-                        <a class="item-gallery bg-img1" href="images/gallery-09.jpg" data-lightbox="gallery" style="background-image: url('images/gallery-09.jpg');"></a>
-                    </div>
                 </div>
             </div>
-            <div class="sidebar-gallery w-full">
-<span class="mtext-101 cl5">
-About Us
-</span>
-                <p class="stext-108 cl6 p-t-27">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate hendrerit. Praesent faucibus erat vitae rutrum gravida. Vestibulum tempus mi enim, in molestie sem fermentum quis.
-                </p>
+            <div class="col-sm-6 col-lg-3 p-b-50">
+                <h4 class="stext-301 cl0 p-b-30">
+                    Newsletter
+                </h4>
+                <form>
+                    <div class="wrap-input1 w-full p-b-4">
+                        <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+                        <div class="focus-input1 trans-04"></div>
+                    </div>
+                    <div class="p-t-18">
+                        <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                            Subscribe
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
+        <div class="p-t-40">
+            <div class="flex-c-m flex-w p-b-18">
+                <a href="#" class="m-all-1">
+                    <img src="{{ asset('images/icons/icon-pay-01.png') }}" alt="ICON-PAY">
+                </a>
+                <a href="#" class="m-all-1">
+                    <img src="{{ asset('images/icons/icon-pay-02.png') }}" alt="ICON-PAY">
+                </a>
+                <a href="#" class="m-all-1">
+                    <img src="{{ asset('images/icons/icon-pay-03.png') }}" alt="ICON-PAY">
+                </a>
+                <a href="#" class="m-all-1">
+                    <img src="{{ asset('images/icons/icon-pay-04.png') }}" alt="ICON-PAY">
+                </a>
+                <a href="#" class="m-all-1">
+                    <img src="{{ asset('images/icons/icon-pay-05.png') }}" alt="ICON-PAY">
+                </a>
+            </div>
+            <p class="stext-107 cl6 txt-center">
+
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://www.linkedin.com/in/martin-tresor-mbang-245975123/" target="_blank">Mbang Martin Tresor</a>
+
+            </p>
+        </div>
     </div>
-</aside>
+</footer>

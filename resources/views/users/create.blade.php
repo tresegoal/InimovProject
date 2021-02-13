@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.adminBase')
 
 @section('content')
     <h3 class="page-title">@lang('quickadmin.users.title')</h3>
@@ -46,7 +46,7 @@
                     @endif
                 </div>
             </div>
-            <div class="row">
+            {{--<div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('role_id', trans('quickadmin.users.fields.role').'*', ['class' => 'control-label']) !!}
                     {!! Form::select('role_id', $roles, old('role_id'), ['class' => 'form-control select2', 'required' => '']) !!}
@@ -57,7 +57,7 @@
                         </p>
                     @endif
                 </div>
-            </div>
+            </div>--}}
             
         </div>
     </div>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
     <br /><br /><br /><br />
@@ -6,29 +6,19 @@
         <div class="container">
             <div class="p-b-10">
                 <h3 class="ltext-103 cl5">
-                    Produits de la categorie {{ $categorie->name }}
+                    La liste des produits
                 </h3>
             </div>
             <div class="flex-w flex-sb-m p-b-52">
                 <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+                    <a class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" href="{{ route('product') }}">
                         All Products
-                    </button>
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-                        Women
-                    </button>
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-                        Men
-                    </button>
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-                        Bag
-                    </button>
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-                        Shoes
-                    </button>
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-                        Watches
-                    </button>
+                    </a>
+                    @foreach($categories as $cat)
+                        <a class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" href="{{ route('category.produits',['id'=> $cat->id]) }}">
+                            {{ $cat->name }}
+                        </a>
+                    @endforeach
                 </div>
                 <div class="flex-w flex-c-m m-tb-10">
                     <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
@@ -216,7 +206,7 @@
                         <div class="block2-pic hov-img0 label-new" data-label="{{ $produit->quantity }} en stock">
                             @if(isset($produit->images[0]))
                             @for($i=0;$i<1;$i++)
-                                <img src="{{ asset('images/'. $produit->images[0]->url) }}" alt="IMG-PRODUCT">
+                                <img src="{{ asset($produit->images[0]->url) }}" alt="{{ $produit->images[0]->alt }}" width="560px" height="330px">
                             @endfor
                             @endif
                             <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
@@ -226,7 +216,7 @@
                         </div>
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">
-                                <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                     {{ $produit->name }}
                                 </a>
                                 <span class="stext-105 cl3">
@@ -279,10 +269,10 @@
                                         <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
                                         <div class="slick3 gallery-lb">
                                             @foreach($produit->images as $image)
-                                                <div class="item-slick3 img-fluid" data-thumb="{{ asset('images/'.$image->url) }}">
+                                                <div class="item-slick3 img-fluid" data-thumb="{{ asset($image->url) }}">
                                                 <div class="wrap-pic-w pos-relative">
-                                                    <img src="{{ asset('images/'.$image->url) }}" alt="IMG-PRODUCT" class="img-fluid">
-                                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04 " href="{{ asset('images/'.$image->url) }}">
+                                                    <img src="{{ asset($image->url) }}" alt="{{ $produit->images[0]->alt }}" width="560px" height="330px">
+                                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04 " href="{{ asset($image->url) }}">
                                                         <i class="fa fa-expand"></i>
                                                     </a>
                                                 </div>

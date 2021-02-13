@@ -20,6 +20,7 @@
 <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 <script src="{{ url('adminlte/js') }}/bootstrap.min.js"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap-fileupload.js') }}"></script>
 <script src="{{ url('adminlte/js') }}/select2.full.min.js"></script>
 <script src="{{ url('adminlte/js') }}/main.js"></script>
 
@@ -36,12 +37,7 @@
         }
     });
 
-     
-
 </script>
-
- 
-
 
 
 @yield('javascript')

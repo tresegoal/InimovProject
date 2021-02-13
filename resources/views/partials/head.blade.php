@@ -24,6 +24,8 @@
 <![endif]-->
 
 <link href="{{ url('adminlte/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap-fileupload.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/fileinput.css') }}">
 <link rel="stylesheet"
       href="{{ url('quickadmin/css') }}/select2.min.css"/>
 <link href="{{ url('adminlte/css/AdminLTE.min.css') }}" rel="stylesheet">

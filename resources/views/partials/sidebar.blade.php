@@ -8,14 +8,14 @@
              
 
             <li class="{{ $request->segment(1) == 'home' ? 'active' : '' }}">
-                <a href="{{ url('/') }}">
+                <a href="{{ url('/admin') }}">
                     <i class="fa fa-wrench"></i>
                     <span class="title">@lang('quickadmin.qa_dashboard')</span>
                 </a>
             </li>
 
             
-            @can('user_management_access')
+{{--            @can('user_management_access')--}}
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
@@ -26,7 +26,7 @@
                 </a>
                 <ul class="treeview-menu">
                 
-                @can('role_access')
+           {{--     @can('role_access')
                 <li class="{{ $request->segment(2) == 'roles' ? 'active active-sub' : '' }}">
                         <a href="{{ route('admin.roles.index') }}">
                             <i class="fa fa-briefcase"></i>
@@ -35,8 +35,8 @@
                             </span>
                         </a>
                     </li>
-                @endcan
-                @can('user_access')
+                @endcan--}}
+{{--                @can('user_access')--}}
                 <li class="{{ $request->segment(2) == 'users' ? 'active active-sub' : '' }}">
                         <a href="{{ route('admin.users.index') }}">
                             <i class="fa fa-user"></i>
@@ -45,22 +45,15 @@
                             </span>
                         </a>
                     </li>
-                @endcan
+{{--                @endcan--}}
                 </ul>
             </li>
-            @endcan
-            @can('country_access')
-            <li class="{{ $request->segment(2) == 'countries' ? 'active' : '' }}">
-                <a href="{{ route('admin.countries.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span class="title">@lang('quickadmin.countries.title')</span>
-                </a>
-            </li>
-            @endcan
+{{--            @endcan--}}
+
             @can('category_create')
                 <li class="{{ $request->segment(2) == 'users' ? 'active active-sub' : '' }}">
                         <a href="{{ route('admin.categories.index') }}">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-suitcase"></i>
                             <span class="title">
                                 @lang('quickadmin.categories.title')
                             </span>
@@ -68,61 +61,42 @@
                     </li>
                 @endcan
 
-            @can('customer_access')
-            <li class="{{ $request->segment(2) == 'customers' ? 'active' : '' }}">
-                <a href="{{ route('admin.customers.index') }}">
-                    <i class="fa fa-low-vision"></i>
-                    <span class="title">@lang('quickadmin.customers.title')</span>
+            @can('product_access')
+            <li class="{{ $request->segment(2) == 'produit' ? 'active' : '' }}">
+                <a href="{{ route('admin.produits.index') }}">
+                    <i class="fa fa-product-hunt"></i>
+                    <span class="title">@lang('quickadmin.produits.title')</span>
                 </a>
             </li>
             @endcan
             
-            @can('room_access')
-            <li class="{{ $request->segment(2) == 'rooms' ? 'active' : '' }}">
-                <a href="{{ route('admin.rooms.index') }}">
-                    <i class="fa fa-gears"></i>
-                    <span class="title">@lang('quickadmin.rooms.title')</span>
+            @can('image_access')
+            <li class="{{ $request->segment(2) == 'images' ? 'active' : '' }}">
+                <a href="{{ route('admin.images.index') }}">
+                    <i class="fa fa-image"></i>
+                    <span class="title">@lang('quickadmin.images.title')</span>
                 </a>
             </li>
             @endcan
-            
-            @can('booking_access')
-            <li class="{{ $request->segment(2) == 'bookings' ? 'active' : '' }}">
-                <a href="{{ route('admin.bookings.index') }}">
-                    <i class="fa fa-bell"></i>
-                    <span class="title">@lang('quickadmin.bookings.title')</span>
-                </a>
-            </li>
-            @endcan
-            
-            @can('find_room_access')
-            <li class="{{ $request->segment(2) == 'find_rooms' ? 'active' : '' }}">
-                <a href="{{ route('admin.find_rooms.index') }}">
-                    <i class="fa fa-arrows"></i>
-                    <span class="title">@lang('quickadmin.find-room.title')</span>
-                </a>
-            </li>
-            @endcan
-            
-
-            
-
-            
 
 
-
-            <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="{{ route('auth.change_password') }}">
+           {{-- <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
+                <a href="{{ route('password.request') }}">
                     <i class="fa fa-key"></i>
                     <span class="title">@lang('quickadmin.qa_change_password')</span>
                 </a>
-            </li>
+            </li>--}}
 
             <li>
-                <a href="#logout" onclick="$('#logout').submit();">
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                  document.getElementById('logout-form1').submit();">
                     <i class="fa fa-arrow-left"></i>
                     <span class="title">@lang('quickadmin.qa_logout')</span>
                 </a>
+                <form id="logout-form1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
             </li>
         </ul>
     </section>

@@ -22,68 +22,44 @@ return [
 			'email' => 'Email',
 			'password' => 'Password',
 			'role' => 'Role',
+            'active' => 'Active',
 			'remember-token' => 'Remember token',
 		],
 	],
-	
-	'countries' => [
-		'title' => 'Countries',
-		'fields' => [
-			'shortcode' => 'Shortcode',
-			'title' => 'Title',
-			'name' => 'Name',
-		],
-	],
-	'categories' => [
-		'title' => 'Categories',
-		'fields' => [
-			'title' => 'Title',
-			'name' => 'Name',
-		],
-	],
-	
-	'customers' => [
-		'title' => 'Customers',
-		'fields' => [
-			'first-name' => 'First name',
-			'last-name' => 'Last name',
-			'address' => 'Address',
-			'phone' => 'Phone',
-			'email' => 'Email',
-			'country' => 'Country',
-		],
-	],
-	
-	'rooms' => [
-		'title' => 'Rooms',
-		'fields' => [
-			'room-number' => 'Room number',
-			'floor' => 'Floor',
-			'category' => 'Category',
-			'description' => 'Description',
-            'actions' => 'Actions',
-		],
-	],
-	
-	'bookings' => [
-		'title' => 'Bookings',
-		'fields' => [
-			'customer' => 'Customer',
-			'room' => 'Room',
-			'time-from' => 'Time from',
-			'time-to' => 'Time to',
-			'additional-information' => 'Additional information',
-            'amount' => 'Amount'
-		],
-	],
-	
-	'find-room' => [
-		'title' => 'Find room',
-		'fields' => [
-		],
-        'no_rooms_found' => 'No rooms were found for your chosen dates.',
-        'book_room' => 'Book room',
+
+    'categories' => [
+        'title' => 'Categories',
+        'fields' => [
+            'description' => 'description',
+            'name' => 'nom',
+            'active' => 'active',
+            'image' => 'image',
+        ],
     ],
+
+    'produits' => [
+        'title' => 'Products',
+        'fields' => [
+            'description' => 'description',
+            'name' => 'name',
+            'active' => 'active',
+            'category' => 'Category',
+            'price' => 'price',
+            'qte' => 'Quantity',
+            'tva' => 'Tva',
+        ],
+    ],
+
+    'images' => [
+        'title' => 'Images',
+        'fields' => [
+            'url' => 'url',
+            'alt' => 'alt',
+            'category' => 'category',
+            'produit' => 'product',
+        ],
+    ],
+
 	'qa_create' => 'Create',
 	'qa_save' => 'Save',
 	'qa_edit' => 'Edit',
@@ -290,7 +266,7 @@ return [
 	'qa_forgot_password' => 'Forgot your password?',
 	'qa_remember_me' => 'Remember me',
 	'qa_login' => 'Login',
-	'qa_change_password' => 'Change password',
+	'qa_change_password' => 'Reset password',
 	'qa_csv' => 'CSV',
 	'qa_print' => 'Print',
 	'qa_excel' => 'Excel',
@@ -319,5 +295,5 @@ return [
 	'qa_parse_csv' => 'Parse CSV',
 	'qa_import_data' => 'Import data',
 	'qa_imported_rows_to_table' => 'Imported :rows rows to :table table',
-	'quickadmin_title' => 'hotel-booking',
+	'quickadmin_title' => 'Inimov Admin Panel',
 ];

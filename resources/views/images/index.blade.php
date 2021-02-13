@@ -2,19 +2,19 @@
 @extends('layouts.adminBase')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.categories.title')</h3>
-    @can('category_create')
+    <h3 class="page-title">@lang('quickadmin.images.title')</h3>
+    @can('image_create')
     <p>
-        <a href="{{ route('admin.categories.create') }}" class="btn btn-success">@lang('quickadmin.qa_add_new')</a>
+        <a href="{{ route('admin.images.create') }}" class="btn btn-success">@lang('quickadmin.qa_add_new')</a>
         
     </p>
     @endcan
 
-    @can('category_delete')
+    @can('image_delete')
     <p>
         <ul class="list-inline">
-            <li><a href="{{ route('admin.categories.index') }}" style="{{ request('show_deleted') == 1 ? '' : 'font-weight: 700' }}">@lang('quickadmin.qa_all')</a></li> |
-            <li><a href="{{ route('admin.categories.index') }}?show_deleted=1" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">@lang('quickadmin.qa_trash')</a></li>
+            <li><a href="{{ route('admin.images.index') }}" style="{{ request('show_deleted') == 1 ? '' : 'font-weight: 700' }}">@lang('quickadmin.qa_all')</a></li> |
+            <li><a href="{{ route('admin.images.index') }}?show_deleted=1" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">@lang('quickadmin.qa_trash')</a></li>
         </ul>
     </p>
     @endcan
@@ -26,71 +26,71 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table class="table table-bordered table-striped {{ count($categories) > 0 ? 'datatable' : '' }} @can('category_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
+            <table class="table table-bordered table-striped {{ count($images) > 0 ? 'datatable' : '' }} @can('image_delete') @if ( request('show_deleted') != 1 ) dt-select @endif @endcan">
                 <thead>
                     <tr>
-                        @can('category_delete')
+                        @can('image_delete')
                             @if ( request('show_deleted') != 1 )<th style="text-align:center;"><input type="checkbox" id="select-all" /></th>@endif
                         @endcan
 
-                        <th>@lang('quickadmin.categories.fields.name')</th>
-                        <th>@lang('quickadmin.categories.fields.description')</th>
-{{--                        <th>@lang('quickadmin.categories.fields.image')</th>--}}
-                        <th>@lang('quickadmin.categories.fields.active')</th>
+                        <th>@lang('quickadmin.images.fields.url')</th>
+                        <th>@lang('quickadmin.images.fields.alt')</th>
+                        <th>@lang('quickadmin.images.fields.category')</th>
+                        <th>@lang('quickadmin.images.fields.produit')</th>
                         @if( request('show_deleted') == 1 )
-                        <th>&nbsp;</th>
+                        <th>Actions</th>
                         @else
-                        <th>&nbsp;</th>
+                        <th>Actions</th>
                         @endif
                     </tr>
                 </thead>
                 
                 <tbody>
-                    @if (count($categories) > 0)
-                        @foreach ($categories as $category)
-                            <tr data-entry-id="{{ $category->id }}">
-                                @can('category_delete')
+                    @if (count($images) > 0)
+                        @foreach ($images as $image)
+                            <tr data-entry-id="{{ $image->id }}">
+                                @can('image_delete')
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
-                                <td field-key='name'>{{ $category->name }}</td>
-                                <td field-key='description'>{{ $category->description }}</td>
-{{--                                <td field-key='image'>{{ $category->image->url }}</td>--}}
-                                <td field-key='active'>{{ $category->active }}</td>
+                                <td field-key='url'>{{ $image->url }}</td>
+                                <td field-key='alt'>{{ $image->alt }}</td>
+                                <td field-key='category_id'>{{ $image->category->name }}</td>
+                                <td field-key='produit_id'>{{ $image->produit->name }}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>
-                                    @can('category_delete')
+                                    @can('image_delete')
                                                                         {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'POST',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",
-                                        'route' => ['admin.categories.restore', $category->id])) !!}
+                                        'route' => ['admin.images.restore', $image->id])) !!}
                                     {!! Form::submit(trans('quickadmin.qa_restore'), array('class' => 'btn btn-xs btn-success')) !!}
                                     {!! Form::close() !!}
                                 @endcan
-                                    @can('category_delete')
+                                    @can('image_delete')
                                                                         {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",
-                                        'route' => ['admin.categories.perma_del', $category->id])) !!}
+                                        'route' => ['admin.images.perma_del', $image->id])) !!}
                                     {!! Form::submit(trans('quickadmin.qa_permadel'), array('class' => 'btn btn-xs btn-danger')) !!}
                                     {!! Form::close() !!}
                                 @endcan
                                 </td>
                                 @else
                                 <td>
-                                    @can('category_view')
-                                    <a href="{{ route('admin.categories.show',[$category->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
+                                    @can('image_view')
+                                    <a href="{{ route('admin.images.show',[$image->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
                                     @endcan
-                                    @can('category_edit')
-                                    <a href="{{ route('admin.categories.edit',[$category->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.qa_edit')</a>
+                                    @can('image_edit')
+                                    <a href="{{ route('admin.images.edit',[$image->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.qa_edit')</a>
                                     @endcan
-                                    @can('category_delete')
+                                    @can('image_delete')
 {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("quickadmin.qa_are_you_sure")."');",
-                                        'route' => ['admin.categories.destroy', $category->id])) !!}
+                                        'route' => ['admin.images.destroy', $image->id])) !!}
                                     {!! Form::submit(trans('quickadmin.qa_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
                                     {!! Form::close() !!}
                                     @endcan
@@ -111,8 +111,8 @@
 
 @section('javascript') 
     <script>
-        @can('category_delete')
-            @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.categories.mass_destroy') }}'; @endif
+        @can('image_delete')
+            @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.images.mass_destroy') }}'; @endif
         @endcan
 
     </script>
