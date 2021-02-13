@@ -1,16 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreUsersRequest;
-use App\Http\Requests\Admin\UpdateUsersRequest;
+use Illuminate\Support\Facades\Hash;
+
 
 class UsersController extends Controller
 {
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Display a listing of User.
      *
@@ -18,14 +26,13 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('user_access')) {
+        /*if (! Gate::allows('user_access')) {
             return abort(401);
-        }
+        }*/
 
+                $users = \App\Models\User::all();
 
-                $users = User::all();
-
-        return view('admin.users.index', compact('users'));
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -35,13 +42,13 @@ class UsersController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('user_create')) {
+        /*if (! Gate::allows('user_create')) {
             return abort(401);
-        }
+        }*/
         
-        $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+       // $roles = \App\Role::get()->pluck('title', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
 
-        return view('admin.users.create', compact('roles'));
+        return view('users.create'/* compact('roles')*/);
     }
 
     /**
@@ -50,12 +57,16 @@ class UsersController extends Controller
      * @param  \App\Http\Requests\StoreUsersRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUsersRequest $request)
+    public function store(Request $request)
     {
         if (! Gate::allows('user_create')) {
             return abort(401);
         }
-        $user = User::create($request->all());
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = Hash::make($request->get('password'));
+        $user->save();
 
 
 
@@ -89,7 +100,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUsersRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if (! Gate::allows('user_edit')) {
             return abort(401);
@@ -154,6 +165,24 @@ class UsersController extends Controller
                 $entry->delete();
             }
         }
+    }
+
+    public function activate($id)
+    {
+        $produit = $this->userRepository->active($id);
+
+        // flashing("Le produit '" . $produit->name . "' a été activée");
+
+        return back();
+    }
+
+    public function deactivate($id)
+    {
+
+        $produit = $this->userRepository->deactive($id);
+
+        //flashing("Le produit '" . $produit->name . "' a été desactivée");
+        return back();
     }
 
 }
