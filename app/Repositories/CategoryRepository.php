@@ -21,4 +21,15 @@ class CategoryRepository extends BaseRepository
         return $this->model->doesntHave('image')->get();
     }
 
+    public function getCategoriesWithRelations($id,array $relations) {
+        $category = Category::with($relations)->find($id);
+
+        return $category;
+    }
+
+    public function getDeleteCategories($relations) {
+        $category = Category::with($relations)->onlyTrashed()->get();
+        return $category;
+    }
+
 }

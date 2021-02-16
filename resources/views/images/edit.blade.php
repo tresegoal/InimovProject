@@ -14,8 +14,10 @@
                 <div class="col-xs-12 form-group">
                     <div class="fileupload fileupload-new {!! $errors->has('url') ? 'has-error' : '' !!} col-lg-6 col-lg-offset-4"
                          data-provides="fileupload">
-                        <div class="fileupload-preview thumbnail" style="max-width: 300px; max-height: 250px;"></div>
-                        <div>
+                        <div class="fileupload-preview thumbnail" style="max-width: 300px; max-height: 250px;">
+                            <img data-src="{{ asset($image->url) }}" src="{{ asset($image->url) }}" alt="{{ asset($image->url) }}">
+                        </div>
+                    </div>
                       <span class="btn btn-primary btn-file"><span
                                   class="fileupload-new">Selectioner une image</span><span class="fileupload-exists">Changer</span>
                           {!! Form::file('url') !!}
@@ -25,7 +27,7 @@
                         {!! $errors->first('url', '<small class="help-block">:message</small>') !!}
                     </div>
                 </div>
-                <div class="col-xs-12 form-group">
+               {{-- <div class="col-xs-12 form-group">
                     {!! Form::label('category_id', trans('quickadmin.categories.title').'', ['class' => 'control-label']) !!}
                     {!! Form::select('category_id', $cats, old('category_id'), ['class' => 'form-control']) !!}
                     <p class="help-block"></p>
@@ -44,7 +46,7 @@
                             {{ $errors->first('produit_id') }}
                         </p>
                     @endif
-                </div>
+                </div>--}}
             </div>
         </div>
     </div>

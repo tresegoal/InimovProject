@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produit;
 use App\Repositories\CategoryRepository;
+use App\Repositories\ImageRepository;
 use App\Repositories\ProduitRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -13,12 +14,15 @@ class ProduitController extends Controller
 
     private $produitRepository;
     private $categoryRepository;
+    private $imageRepository;
 
     public function __construct(ProduitRepository $produitRepository,
-                                CategoryRepository $categoryRepository)
+                                CategoryRepository $categoryRepository,
+                                ImageRepository $imageRepository)
     {
         $this->produitRepository = $produitRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->imageRepository = $imageRepository;
     }
     /**
      * Display a listing of the resource.
@@ -41,8 +45,9 @@ class ProduitController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepository->getAll([])->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        return view('produits.create', compact('categories'));
+        $images = $this->imageRepository->getImageWithoutCategoriesAndProduct();
+        $categories = $this->categoryRepository->getAll([])->pluck('name','id')->prepend(trans('quickadmin.qa_please_select'), '');
+        return view('produits.create', compact('categories','images'));
     }
 
     /**
@@ -53,7 +58,18 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        $this->produitRepository->store($request->all());
+        $imagesId = $request->input('image_id');
+
+        $produit = $this->produitRepository->stores($request->except('image_id'));
+
+        foreach ($imagesId as $id) {
+
+            if ($id != null) {
+                $image = $this->imageRepository->findOne($id);
+                $image->produit_id = $produit->id;
+                $image->save();
+            }
+        }
         return redirect()->route('admin.produits.index');
     }
 
@@ -76,8 +92,10 @@ class ProduitController extends Controller
      */
     public function edit(Produit $produit)
     {
-        $categories = $this->categoryRepository->getAll([])->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        return view('produits.edit', compact('produit','categories'));
+        $produit = $this->produitRepository->getProductWithRelations($produit->getAttribute('id'),['images']);
+        $images = $this->imageRepository->getImageWithoutCategoriesAndProduct();
+        $categories = $this->categoryRepository->getAll([])->pluck('name','id')->prepend(trans('quickadmin.qa_please_select'), '');
+        return view('produits.edit', compact('produit','categories','images'));
     }
 
     /**
@@ -89,7 +107,26 @@ class ProduitController extends Controller
      */
     public function update(Request $request, Produit $produit)
     {
-        $this->produitRepository->update($produit->getAttribute("id"),$request->all());
+        $imagesId = $request->input('image_id');
+
+        foreach ($produit->images as $img) {
+            $lastImage = $this->imageRepository->findOne($img->id);
+            $lastImage->produit_id = null;
+            $lastImage->save();
+            //dd($result);
+        }
+
+         $this->produitRepository->updates($produit->id,$request->except('image_id'));
+
+        foreach ($imagesId as $id) {
+
+            if ($id != null) {
+                $image = $this->imageRepository->findOne($id);
+                $image->produit_id = $produit->id;
+                $image->save();
+            }
+        }
+
         return redirect()->route('admin.produits.index');
     }
 
@@ -101,7 +138,7 @@ class ProduitController extends Controller
      */
     public function destroy(Produit $produit)
     {
-        $this->produitRepository->destroy($produit->getAttribute("id"));
+        $this->produitRepository->destroys($produit->getAttribute("id"));
         return redirect()->route('admin.produits.index');
     }
 

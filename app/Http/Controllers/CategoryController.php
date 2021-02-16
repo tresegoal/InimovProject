@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image;
 use App\Repositories\CategoryRepository;
+use App\Repositories\ImageRepository;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     private $categoryRepository;
+    private $imageRepository;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoryRepository $categoryRepository,ImageRepository $imageRepository)
     {
        $this->categoryRepository = $categoryRepository;
+       $this->imageRepository = $imageRepository;
     }
 
     /**
@@ -21,11 +25,26 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = $this->categoryRepository->getAll(['image']);
-        //dd($categories);
-        return view('categories.index', compact('categories'));
+
+        if($request->query->has('show_deleted')) {
+            if($request->query->get('show_deleted') == 1) {
+                $categories = $this->categoryRepository->getDeleteCategories(['image']);
+                //dd($categories);
+                return view('categories.index', compact('categories'));
+            }
+            else {
+                $categories = $this->categoryRepository->getAll(['image']);
+
+                return view('categories.index', compact('categories'));
+            }
+
+        } else {
+            $categories = $this->categoryRepository->getAll(['image']);
+
+            return view('categories.index', compact('categories'));
+        }
     }
 
     /**
@@ -35,7 +54,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+
+        $images = $this->imageRepository->getImageWithoutCategoriesAndProduct();
+        return view('categories.create',compact('images'));
     }
 
     /**
@@ -46,14 +67,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $active = $request->get('active');
-        if(isset($active)) $active = 1;
-        else $active = 0;
-        $category = new  Category();
-        $category->name = $request->get('name');
-        $category->description = $request->get('description');
-        $category->active = $active;
-        $category->save();
+        $imageId = $request->image_id;
+        $categorie = $this->categoryRepository->stores($request->except('image_id'));
+        $image = $this->imageRepository->findOne($imageId);
+        $image->category_id = $categorie->id;
+        $image->save();
         return redirect()->route('admin.categories.index');
 
 
@@ -78,8 +96,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //$category = $this->categoryRepository->findOne($category->getAttribute("id"));
-        return view('categories.edit', compact('category'));
+        $category = $this->categoryRepository->getCategoriesWithRelations($category->getAttribute('id'),['image']);
+        //dd($category);
+        $images = $this->imageRepository->getImageWithoutCategoriesAndProduct();
+        return view('categories.edit', compact('category','images'));
     }
 
     /**
@@ -91,7 +111,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $this->categoryRepository->update($category->getAttribute("id"),$request->all());
+        $lastImgId = $category->image->id;
+        $lastImage = $this->imageRepository->findOne($lastImgId);
+        //dd($lastImage);
+        $lastImage->category_id = null;
+        $lastImage->save();
+
+        $this->categoryRepository->updates($category->id,$request->except('image_id'));
+
+        $imageId = $request->image_id;
+        $image = $this->imageRepository->findOne($imageId);
+        $image->category_id = $category->id;
+        $image->save();
+
         return redirect()->route('admin.categories.index');
 
     }
@@ -104,7 +136,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $this->categoryRepository->destroy($category->getAttribute("id"));
+        $this->categoryRepository->destroys($category->getAttribute("id"));
         return redirect()->route('admin.categories.index');
     }
 
@@ -129,9 +161,9 @@ class CategoryController extends Controller
 
     public function massDestroy(Request $request)
     {
-        if (!Gate::allows('booking_delete')) {
+        /*if (!Gate::allows('booking_delete')) {
             return abort(401);
-        }
+        }*/
         if ($request->input('ids')) {
             $entries = Category::whereIn('id', $request->input('ids'))->get();
 
@@ -167,9 +199,9 @@ class CategoryController extends Controller
      */
     public function perma_del($id)
     {
-        if (!Gate::allows('booking_delete')) {
+        /*if (!Gate::allows('booking_delete')) {
             return abort(401);
-        }
+        }*/
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
 

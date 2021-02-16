@@ -64,13 +64,40 @@
                 </div>
                 <div class="col-xs-12 form-group">
                     {!! Form::label('category_id', trans('quickadmin.produits.fields.category').'', ['class' => 'control-label']) !!}
-                    {!! Form::select('category_id', $categories, old('category_id'), ['class' => 'form-control', 'required' => 'required']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('category_id'))
-                        <p class="help-block">
-                            {{ $errors->first('category_id') }}
-                        </p>
+                    <select name="category_id" id="category_id" class="form-control" required autofocus>
+                        <option selected="selected" value="{{ $produit->category->id }}">{{ $produit->category->name }}</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('category_id'))
+                     <span class="help-block">
+                        <strong>{{ $errors->first('category_id') }}</strong>
+                     </span>
                     @endif
+                </div>
+                <label for="image_id" class="control-label col-lg-12">Ajouter une image</label>
+                <div class="col-lg-6 col-xs-6 form-group">
+                    <select name="image_id[]" id="image_id" class="image_id form-control" size="1" required autofocus multiple="multiple">
+                        @forelse($produit->images as $img)
+                            <option selected="selected" value="{{ $img->id }}" data-left="{{ asset($img->url) }}">{{ $img->url }}</option>
+                            <option value="">Selectionner une image</option>
+                            @empty <option selected="selected" value="">Selectionner une image</option>
+                        @endforelse
+                        @forelse($images as $image)
+                            <option value="{{ $image->id }}" data-left="{{ asset($image->url) }}">{{ asset($image->alt) }}</option>
+                            @empty
+                        @endforelse
+                        <p class="help-block"></p>
+                        @if($errors->has('image_id'))
+                            <p class="help-block">
+                                {{ $errors->first('image_id') }}
+                            </p>
+                        @endif
+                    </select>
+                </div>
+                <div class="col-lg-6 col-xs-6 form-group">
+                    <input value="activate" id="activate_selectator1" type="button" class="btn btn-primary">
                 </div>
                 <div class="col-xs-12 form-group">
                     {!! Form::label('active', trans('quickadmin.produits.fields.active').'', ['class' => 'control-label']) !!}
@@ -91,3 +118,25 @@
     {!! Form::close() !!}
 @stop
 
+@section('javascript')
+    <script type="text/javascript">
+        $(function () {
+            var $activate_selectator = $('#activate_selectator1');
+            $activate_selectator.click(function () {
+                var $select = $('.image_id');
+                if ($select.data('selectator') === undefined) {
+                    $select.selectator({
+                        showAllOptionsOnFocus: true,
+                        useDimmer: true,
+                        searchFields: 'value text subtitle right'
+                    });
+                    $activate_selectator.val('destroy');
+                } else {
+                    $select.selectator('destroy');
+                    $activate_selectator.val('activate');
+                }
+            });
+            $activate_selectator.trigger('click');
+        });
+    </script>
+@stop

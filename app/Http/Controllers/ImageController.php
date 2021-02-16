@@ -41,10 +41,10 @@ class ImageController extends Controller
      */
     public function create()
     {
-        $cats= $this->categoryRepository->getCategoriesWithoutImage()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $produits = $this->produitRepository->getAll([])->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+       /* $cats= $this->categoryRepository->getCategoriesWithoutImage()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $produits = $this->produitRepository->getAll([])->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');*/
 
-        return view('images.create',compact('cats','produits'));
+        return view('images.create');
     }
 
     /**
@@ -62,12 +62,16 @@ class ImageController extends Controller
             $filePath = $request->file('url')->storeAs('images', $fileName, 'public');
             $image->alt = time().'_'.$request->file('url')->getClientOriginalName();
             $image->url =  '/storage/'.$filePath;
-            $image->category_id = $request->category_id;
-            $image->produit_id = $request->produit_id;
             $image->save();
+
+            return redirect()->route('admin.images.index')
+                ->with('success','File has been uploaded.');
         }
+        else {
+
         return redirect()->route('admin.images.index')
-            ->with('success','File has been uploaded.');
+            ->with('error','Form doesn\'t contain file' );
+        }
 
     }
 
@@ -91,10 +95,10 @@ class ImageController extends Controller
     public function edit(Image $image)
     {
 
-        $cats= $this->categoryRepository->getCategoriesWithoutImage()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
-        $produits = $this->produitRepository->getAll([])->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        /*$cats= $this->categoryRepository->getCategoriesWithoutImage()->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');
+        $produits = $this->produitRepository->getAll([])->pluck('name', 'id')->prepend(trans('quickadmin.qa_please_select'), '');*/
 
-        return view('images.edit', compact('image','cats','produits'));
+        return view('images.edit');
     }
 
     /**
@@ -106,20 +110,21 @@ class ImageController extends Controller
      */
     public function update(Request $request, Image $image)
     {
-
-        //dd($request);
         if($request->file('url')) {
             $fileName = time().'_'.$request->file('url')->getClientOriginalName();
             $filePath = $request->file('url')->storeAs('images', $fileName, 'public');
-            $image->alt = time().'_'.$request->file('url')->getClientOriginalName();
+            $image->alt = $fileName;
             $image->url =  $filePath;
-        }
-        $image->category_id = $request->category_id;
-        $image->produit_id = $request->produit_id;
-        $image->save();
+            $image->save();
 
         return redirect()->route('admin.images.index')
             ->with('success','File has been uploaded.');
+        }
+        else {
+
+            return redirect()->route('admin.images.index')
+                ->with('error','Form doesn\'t contain file' );
+        }
     }
 
     /**
@@ -130,7 +135,7 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        $this->imageRepository->destroy($image->getAttribute("id"));
+        $this->imageRepository->destroys($image->getAttribute("id"));
         return redirect()->route('admin.images.index');
     }
 

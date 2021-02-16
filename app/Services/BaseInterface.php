@@ -8,9 +8,9 @@ interface BaseInterface
 {
     public function getAll(array $relations);
     public function findOne($id);
-    public function store(array $inputs);
-    public function update($id,array $inputs);
-    public function destroy($id);
+    public function stores(array $inputs);
+    public function updates($id,array $inputs);
+    public function destroys($id);
     public function active($id);
     public function deactive($id);
 

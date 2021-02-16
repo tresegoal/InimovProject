@@ -5,8 +5,9 @@ namespace App\Repositories;
 
 
 use App\Services\BaseInterface;
+use Illuminate\Database\Eloquent\Model;
 
-class BaseRepository implements BaseInterface
+class BaseRepository extends Model implements BaseInterface
 
 {
     protected $model;
@@ -19,15 +20,15 @@ class BaseRepository implements BaseInterface
         return $this->model->findOrFail($id);
     }
 
-    public function store(array $inputs) {
+    public function stores(array $inputs) {
         return $this->model->create($inputs);
     }
 
-    public function update($id,array $inputs) {
+    public function updates($id,array $inputs) {
         return $this->findOne($id)->update($inputs);
     }
 
-    public function destroy($id) {
+    public function destroys($id) {
         return $this->findOne($id)->delete();
     }
 

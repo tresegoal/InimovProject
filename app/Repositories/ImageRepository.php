@@ -13,4 +13,8 @@ class ImageRepository extends BaseRepository
     }
 
 
+    public function getImageWithoutCategoriesAndProduct() {
+        return $this->model->doesntHave('category')->doesntHave('produit')->get();
+    }
+
 }

@@ -30,6 +30,26 @@
                         </p>
                     @endif
                 </div>
+
+                <label for="image_id" class="control-label col-lg-12">Ajouter une image</label>
+                <div class="col-lg-6 col-xs-6 form-group">
+                    <select name="image_id" id="image_id" class="form-control" required autofocus>
+                        <option selected="selected" value="">Selectionner une image</option>
+                        @foreach($images as $image)
+                            <option value="{{ $image->id }}" data-left="{{ asset($image->url) }}">{{ asset($image->alt) }}</option>
+                        @endforeach
+                        <p class="help-block"></p>
+                        @if($errors->has('image_id'))
+                            <p class="help-block">
+                                {{ $errors->first('image_id') }}
+                            </p>
+                        @endif
+                    </select>
+                </div>
+                <div class="col-lg-6 col-xs-6 form-group">
+                    <input value="activate" id="activate_selectator1" type="button" class="btn btn-primary">
+                </div>
+
                 <div class="col-xs-12 form-group">
                     {!! Form::label('active', trans('quickadmin.categories.fields.active').'', ['class' => 'control-label']) !!}
                     {{Form::hidden('active',0)}}
@@ -41,6 +61,8 @@
                         </p>
                     @endif
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -49,4 +71,27 @@
     {!! Form::close() !!}
 @stop
 
-
+@section('javascript')
+    <script type="text/javascript">
+        $(function () {
+            var $activate_selectator = $('#activate_selectator1');
+            $activate_selectator.click(function () {
+                var $select = $('#image_id');
+                if ($select.data('selectator') === undefined) {
+                    $select.selectator({
+                        labels: {
+                            search: 'Search here...'
+                        },
+                        useDimmer: true,
+                        searchFields: 'value text subtitle right'
+                    });
+                    $activate_selectator.val('destroy');
+                } else {
+                    $select.selectator('destroy');
+                    $activate_selectator.val('activate');
+                }
+            });
+            $activate_selectator.trigger('click');
+        });
+    </script>
+@stop

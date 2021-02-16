@@ -24,4 +24,10 @@ class ProduitRepository extends BaseRepository
             ->where('name', 'like', "%$chaine%")->get();
     }
 
+    public function getProductWithRelations($id,array $relations) {
+        $produit = Produit::with($relations)->find($id);
+
+        return $produit;
+    }
+
 }
